@@ -2,9 +2,37 @@
 <html>
     <head>
         <title>{{title}}</title>
+        <style>
+            .error {
+                color:red;
+            }
+            
+            form {
+                background-color: #eee;
+                padding: 20px;
+                margin: 0 auto;
+                width: 540px;
+                font: 16px sans-serif;
+                border-radius: 10px;
+            }
+
+            textarea {
+                margin: 10px 0;
+                width: 540px;
+                height: 120px;
+            }
+        
+        
+        </style>
     </head>
 <body>
+    <nav>
+        <a href="/blog">Main Blog Page</a>
+        <br/>
+        <a href="/new_post">Add a Blog Entry</a>
 
+    </nav>
+        
     {% block content %}
     {% endblock %}
 

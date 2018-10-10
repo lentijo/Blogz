@@ -1,33 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Build A Blog</h1>
-    <form method='post'>
-        <label>
-            Title for your new blog:
-            <input type="text" name='task' />
-        </label>
-        <br/>
-        <br/>
+<h1 align="center">Add a Blog Entry</h1>
 
-        <br/>
-        <label>Your New Blog Entry:
-        <textarea name="blog_entry" value='{{blog_entry}}'></textarea>
-        </label>
-        <input type="submit" value='Add Blog' />
-    </form>
+    <form method='post'>
+            <label>
+                New Blog Title:
+                <input type="text" name='task' />
+            </label>
+            <br/>
+    
+            <label>New Blog Entry:
+            <textarea name="blog_entry" value='{{blog_entry}}'></textarea>
+            </label>
+            <input type="submit" value='Add Blog' />
+        </form>
 
     <hr />
 
-    {% if tasks|length == 0 %}
-    <p>No blogs yet</p>
-    {% else %}
-
-        <ul>
-            {% for task in tasks %}
-            <li>{{task}}</li>
-            {% endfor %}
-        </ul>
-
-    {% endif %}
 {% endblock %}
+
+
+   

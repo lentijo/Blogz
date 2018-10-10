@@ -7,13 +7,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://build-a-blog:chloe@loca
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
-class Task(db.Model):
+class Blog(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column.String(120)
+    title = db.Column(db.String(500))
+    body = db.Column(db.String(3000))
+   
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, title):
+        self.title = title
+        self.body = body
 
 tasks = []
 
@@ -26,5 +29,18 @@ def index():
 
     return render_template('blog.html',title="Build A Blog", tasks=tasks)
 
-if __name__ = "__main__":
+@app.route('/blog', methods=['POST', 'GET'])
+def blog():
+    return render_template('blog.html',title="Build A Blog", tasks=tasks)
+
+@app.route('/new_post', methods=['POST', 'GET'])
+def new_post():
+    if request.method == 'POST':
+        task = request.form['task']
+        tasks.append(task)
+    return render_template('new_post.html',title="Add a new Blog", tasks=tasks)
+
+    
+
+if __name__ == "__main__":
     app.run()
