@@ -6,12 +6,12 @@
     <form method='post'>
             <label>
                 New Blog Title:
-                <input type="text" name='task' />
+                <input type="text" name='title' value='{{title}}' />
             </label>
             <br/>
     
             <label>New Blog Entry:
-            <textarea name="blog_entry" value='{{blog_entry}}'></textarea>
+            <textarea name="body" value='{{body}}'></textarea>
             </label>
             <input type="submit" value='Add Blog' />
         </form>
