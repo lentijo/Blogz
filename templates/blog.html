@@ -16,7 +16,16 @@
 
         <ul>
             {% for blog in blogs %}
-            <li>{{title.name}}</li>
+            <li><a href="./single_post?id={{ blog.id }}">{{blog.title}}</a></li>
+            <p></p>
+
+            <span style="display:block;text-overflow: ellipsis;width: 150px;overflow: hidden; white-space: nowrap;">
+                    {{blog.body}}
+                    </span>
+
+                    <br/>
+
+
             {% endfor %}
         </ul>
 
