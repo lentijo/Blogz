@@ -5,18 +5,18 @@
 
 
 
-    <h1 align="center">Blogz</h1>
+    <h1 align="center">Blogz Users</h1>
 
 
     <hr />
 
     {% if blogs|length == 0 %}
-    <p>No blogs yet</p>
+    <p>No users yet</p>
     {% else %}
 
         <ul>
             {% for blog in blogs %}
-            <li><a href="./blog?id={{ blog.id }}">{{blog.owner}}</a></li>
+            <li><a href="./blog?id={{ owner.email }}">{{owner.email}}</a></li>
            
 
  

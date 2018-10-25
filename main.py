@@ -89,7 +89,8 @@ def logout():
 @app.route('/', methods=['POST', 'GET'])
 def index():
     blogs = Blog.query.all()
-    return render_template('blog.html',title="Build A Blog", blogs=blogs)
+    owner = User.query.filter_by(email=session['email']).first()
+    return render_template('blog.html',title="Build A Blog", blogs=blogs, owner=owner)
     
 
 @app.route('/blog', methods=['POST', 'GET'])
