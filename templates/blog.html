@@ -17,12 +17,13 @@
         <ul>
             {% for blog in blogs %}
             <li><a href="./single_post?id={{ blog.id }}">{{blog.title}}</a></li>
-            <p></p>
+           
 
             <span style="display:block;text-overflow: ellipsis;width: 150px;overflow: hidden; white-space: nowrap;">
-                    {{blog.body}}
-                    </span>
+                    {{blog.body}} 
 
+                    </span>
+            <p class="author"><a href="./singleUser?id={{ blog.id }}">created by: {{blog.owner}}</a></p>    
                     <br/>
 
 

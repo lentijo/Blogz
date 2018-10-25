@@ -13,11 +13,13 @@ class Blog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(500))
     body = db.Column(db.String(3000))
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'))
    
 
-    def __init__(self, title, body):
+    def __init__(self, title, body, owner):
         self.title = title
         self.body = body
+        self.owner = owner
 
 
 class User(db.Model):
@@ -25,6 +27,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
+    blogs = db.relationship('Blog', backref='owner')
 
     def __init__(self, email, password):
         self.email = email
@@ -92,7 +95,8 @@ def index():
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     blogs = Blog.query.all() 
-    return render_template('blog.html', blogs=blogs)
+    owner = User.query.filter_by(email=session['email']).first()
+    return render_template('blog.html', blogs=blogs, owner=owner)
 
 @app.route('/new_post', methods=['POST', 'GET'])
 def new_post():
@@ -102,7 +106,8 @@ def new_post():
     if request.method == 'POST':
         title_name = request.form['title']
         body_name = request.form['body']
-        new_blog= Blog(title_name, body_name)
+        owner = User.query.filter_by(email=session['email']).first()
+        new_blog= Blog(title_name, body_name, owner)
  
         
         if not title_name or not body_name:
