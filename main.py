@@ -35,7 +35,7 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'register']
+    allowed_routes = ['index', 'blog', 'single_post', 'singleUser', 'login', 'register']
     if request.endpoint not in allowed_routes and 'email' not in session:
         return redirect('/login')
 
@@ -63,21 +63,25 @@ def register():
         email = request.form['email']
         password = request.form['password']
         verify = request.form['verify']
+        existing_user = User.query.filter_by(email=email).first()
+
+        if not email or not password or not verify:
+            flash('All fields must be filled! Please try again.','error')
+            return render_template('signup.html')
 
     #TODO - validate user's data
        
-        existing_user = User.query.filter_by(email=email).first()
+        
         if not existing_user:
             new_user = User(email, password)
             db.session.add(new_user)
             db.session.commit()
             session['email'] = email
             return redirect('/')
-            #TODO - "remember" the user
+            
         else:
-            #TODO - user better response messaging
+            
             return '<h1>Duplicate user</h1>'
-
 
     return render_template('signup.html')
 
@@ -88,16 +92,17 @@ def logout():
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    blogs = Blog.query.all()
-    owner = User.query.filter_by(email=session['email']).first()
-    return render_template('blog.html',title="Build A Blog", blogs=blogs, owner=owner)
+    users = User.query.all() 
+    # blogs = Blog.query.all()
+    # owner = User.query.filter_by(email=session['email']).first()
+    return render_template('index.html',title="Build A Blog", users=users) #home link redirects index.html
     
 
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     blogs = Blog.query.all() 
-    owner = User.query.filter_by(email=session['email']).first()
-    return render_template('blog.html', blogs=blogs, owner=owner)
+    # owner = User.query.filter_by(email=session['email']).first()
+    return render_template('blog.html', blogs=blogs)
 
 @app.route('/new_post', methods=['POST', 'GET'])
 def new_post():
@@ -125,10 +130,17 @@ def new_post():
     return render_template('new_post.html', blogs=blogs)
 
 @app.route('/single_post')
-def view_post():
+def single_post():
     id = request.args.get('id')
     blog_query = Blog.query.filter_by(id=id).all()
     return render_template('single_post.html', title="", blog_query=blog_query)
+
+@app.route('/singleUser')
+def singleUser():
+    id_user = request.args.get('id')
+    blog_query = Blog.query.filter_by(owner_id=id_user).all()
+    return render_template('singleUser.html', title="", blog_query=blog_query)
+
 
 if __name__ == "__main__":
     app.run()

@@ -9,7 +9,7 @@
 {% for blog in blog_query %}
 <h2>{{blog.title}}</h2>
 <p>{{blog.body}}</p>
-<p>{{blog.email}}</p>
+<p class="author"><a href="./singleUser?id={{ blog.owner.id }}">created by: {{blog.owner.email}}</a></p>  
 
 {% endfor %}
 

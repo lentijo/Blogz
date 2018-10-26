@@ -10,13 +10,13 @@
 
     <hr />
 
-    {% if blogs|length == 0 %}
+    {% if users|length == 0 %}
     <p>No users yet</p>
     {% else %}
 
         <ul>
-            {% for blog in blogs %}
-            <li><a href="./blog?id={{ owner.email }}">{{owner.email}}</a></li>
+            {% for user in users %}
+            <li><a href="./singleUser?id={{ user.id }}"> {{user.email}}</a></li>
            
 
  
